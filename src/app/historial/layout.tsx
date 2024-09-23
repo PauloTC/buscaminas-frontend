@@ -1,5 +1,5 @@
 import { ClientProvider } from "../contexts";
-import { MainLayout } from "../components/layouts/MainLayout";
+import { MainLayout } from "@/app/components/layouts/MainLayout";
 
 export default function LayoutPage({
   children,
@@ -8,7 +8,7 @@ export default function LayoutPage({
 }) {
   return (
     <MainLayout>
-      <div>{children}</div>
+      <div className="dl-p-4">{children}</div>
     </MainLayout>
   );
 }

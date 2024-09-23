@@ -9,7 +9,7 @@ interface MainLayoutProps {
 export const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
   return (
     <ClientProvider>
-      <div className="dl-p-4">{children}</div>
+      {children}
       <NavBar />
     </ClientProvider>
   );

@@ -22,10 +22,6 @@ export default function ClientMapPage() {
     })();
   }, []);
 
-  useEffect(() => {
-    console.log("🚀 ~ ClientMapPage ~ clients:", clients);
-  }, [clients]);
-
   return (
     <div className="dl-rounded-lg dl-overflow-hidden dl-mb-8">
       <APIProvider apiKey="AIzaSyAKZO7_5SojvI4AJby2A1xsDrunnBnPfA4">
@@ -62,7 +58,7 @@ export default function ClientMapPage() {
           </AdvancedMarker>
         </Map>
       </APIProvider>
-      <NavBar />
+      {/* <NavBar /> */}
     </div>
   );
 }

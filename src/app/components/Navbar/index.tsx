@@ -7,10 +7,6 @@ import Icon from "../shared/Icon";
 export default function NavBar() {
   const pathname = usePathname();
 
-  useEffect(() => {
-    console.log("🚀 ~ NavBar ~ router:", pathname);
-  }, []);
-
   const navItems = [
     { href: `/inicio`, label: "Inicio", icon: "map-pin" },
     { href: "/agregar", label: "Agregar", icon: "store-front" },

@@ -19,8 +19,7 @@ export default function LoginForm() {
     validationSchema: validationSchema,
     onSubmit: async (values) => {
       try {
-        const response = await authCtrl.login(values);
-        console.log("🚀 ~ onSubmit: ~ response:", response);
+        await authCtrl.login(values);
       } catch (error) {
         console.error(error);
       } finally {
