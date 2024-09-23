@@ -5,7 +5,7 @@ import {
   AdvancedMarker,
   Pin,
 } from "@vis.gl/react-google-maps";
-import NavBar from "../components/Navbar";
+import NavBar from "../../components/Navbar";
 import { useEffect, useContext } from "react";
 import { ClientContext } from "../contexts";
 
