@@ -19,7 +19,9 @@ export default function LoginForm() {
     validationSchema: validationSchema,
     onSubmit: async (values) => {
       try {
-        await authCtrl.login(values);
+        const response = await authCtrl.login(values);
+
+        localStorage.setItem("user.id", JSON.stringify(response.user.id));
       } catch (error) {
         console.error(error);
       } finally {

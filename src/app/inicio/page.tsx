@@ -14,10 +14,16 @@ export default function ClientMapPage() {
 
   useEffect(() => {
     (async () => {
-      try {
-        await getClients({ id: 2 });
-      } catch (error) {
-        console.error(error);
+      const storedUserId = localStorage.getItem("user.id");
+
+      if (storedUserId) {
+        const userId = JSON.parse(storedUserId);
+
+        try {
+          await getClients({ id: userId });
+        } catch (error) {
+          console.error(error);
+        }
       }
     })();
   }, []);

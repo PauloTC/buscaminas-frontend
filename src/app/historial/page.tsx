@@ -1,19 +1,28 @@
 "use client";
 import { Card } from "./_components/Card";
 import { useEffect, useContext, useState } from "react";
-import { ClientContext } from "../contexts/ClientsContext";
+import { ClientContext, AuthContext } from "../contexts";
 
 export default function ClientHistoryPage() {
   const { getClients, clients } = useContext(ClientContext);
+  const { user } = useContext(AuthContext);
 
   useEffect(() => {
     (async () => {
-      try {
-        await getClients({ id: 2 });
-      } catch (error) {
-        console.error(error);
+      const storedUserId = localStorage.getItem("user.id");
+
+      if (storedUserId) {
+        const userId = JSON.parse(storedUserId);
+
+        try {
+          await getClients({ id: userId });
+        } catch (error) {
+          console.error(error);
+        }
       }
     })();
+
+    console.log("🚀 ~ ClientHistoryPage ~ user:", user);
   }, []);
 
   return (
@@ -26,9 +35,6 @@ export default function ClientHistoryPage() {
         {clients.map((client: any, index: number) => (
           <Card key={client.id} client={client.attributes} />
         ))}
-
-        {/* <Card status="prospectado" />
-        <Card status="pendiente" /> */}
       </ul>
     </div>
   );

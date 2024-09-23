@@ -9,7 +9,7 @@ export default function NavBar() {
 
   const navItems = [
     { href: `/inicio`, label: "Inicio", icon: "map-pin" },
-    { href: "/agregar", label: "Agregar", icon: "store-front" },
+    { href: "/visita", label: "Agregar", icon: "store-front" },
     { href: `/historial`, label: "Historial", icon: "post-history" },
   ];
 

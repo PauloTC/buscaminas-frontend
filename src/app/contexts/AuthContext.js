@@ -13,6 +13,7 @@ export const AuthProvider = (props) => {
   const login = async (token) => {
     try {
       const response = await userCtrl.getMe();
+      console.log("🚀 ~ login ~ response:", response);
       setUser(response);
     } catch (error) {
       console.log("error", error);

@@ -9,10 +9,6 @@ interface CardProps {
 export const Card = ({ client }: any) => {
   const { status, comercial_name, visited } = client;
 
-  useEffect(() => {
-    console.log("🚀 ~ Card ~ card:", client);
-  }, [client]);
-
   return (
     <li className="dl-flex dl-flex-col dl-pt-4">
       <div className="dl-flex">

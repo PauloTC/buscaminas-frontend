@@ -34,7 +34,7 @@ export default function ClientVisitPage() {
               dl-rounded-lg
             "
           >
-            <option selected>Bodega</option>
+            <option defaultValue="">Bodega</option>
             <option value="US">United States</option>
             <option value="CA">Canada</option>
           </select>
@@ -69,7 +69,7 @@ export default function ClientVisitPage() {
               dl-rounded-lg
             "
           >
-            <option selected>Bodega</option>
+            <option defaultValue="">Bodega</option>
             <option value="US">United States</option>
             <option value="CA">Canada</option>
           </select>
