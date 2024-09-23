@@ -5,12 +5,17 @@ import {
   AdvancedMarker,
   Pin,
 } from "@vis.gl/react-google-maps";
-import NavBar from "../../components/Navbar";
 import { useEffect, useContext } from "react";
 import { ClientContext } from "../contexts";
 
 export default function ClientMapPage() {
   const { getClients, clients } = useContext(ClientContext);
+
+  const getPromises = () => {
+    const promises = clients.map((client: any) => client.attributes);
+    const promisesFiltered = promises.filter((client: any) => ['Pendiente', 'Si se prospectó'].includes(client.status))
+    return promisesFiltered;
+  }
 
   useEffect(() => {
     (async () => {
@@ -38,30 +43,40 @@ export default function ClientMapPage() {
           defaultZoom={16}
           disableDefaultUI={true}
         >
-          <AdvancedMarker position={{ lat: -12.130596, lng: -77.020595 }}>
-            <Pin
-              background="#6C6C6C"
-              borderColor="#6C6C6C"
-              glyphColor={"#FFF"}
-              scale={1.2}
-            >
-              <div
-                className="
-                dl-flex
-                dl-items-center
-                dl-justify-center
-                dl-font-bold
-                dl-rounded-full
-                dl-bg-white
-                dl-text-black
-                dl-w-4
-                dl-h-4
-              "
+          {getPromises().map((client: any, index: number) => {
+            const color = client.status === 'Pendiente' ? '#6C6C6C' : '#E16C00';
+            const priority = client.priority && client.priority.split('_') || ['', ''];
+            console.log('prioridad', priority)
+            return (
+              <AdvancedMarker
+                position={{ lat: Number(client.lat), lng: Number(client.long) }}
+                key={index}
               >
-                1
-              </div>
-            </Pin>
-          </AdvancedMarker>
+                <Pin
+                  background={color}
+                  borderColor={color}
+                  glyphColor={"#FFF"}
+                  scale={1.2}
+                >
+                  <div
+                    className="
+                    dl-flex
+                    dl-items-center
+                    dl-justify-center
+                    dl-font-bold
+                    dl-rounded-full
+                    dl-bg-white
+                    dl-text-black
+                    dl-w-4
+                    dl-h-4
+                  "
+                  >
+                    {[priority[1]]}
+                  </div>
+                </Pin>
+              </AdvancedMarker>
+            )
+          })}
         </Map>
       </APIProvider>
     </div>
