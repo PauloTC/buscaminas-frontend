@@ -1,11 +1,11 @@
 "use client";
 import Image from "next/image";
-import Input from "../shared/Input";
+import Input from "../shared/InputField";
 import { useFormik } from "formik";
 import { validationSchema } from "./loginform.form";
 import { useRouter } from "next/navigation";
 import { Auth } from "@/app/api";
-import InputField from "../shared/Input";
+import InputField from "@components/shared/InputField";
 
 const authCtrl = new Auth();
 

@@ -1,17 +1,16 @@
-import { InputHTMLAttributes } from 'react';
-import cn from 'classnames';
+import { InputHTMLAttributes } from "react";
 
 type Props = {
   label: string;
-} & InputHTMLAttributes<HTMLInputElement>
+} & InputHTMLAttributes<HTMLInputElement>;
 
 const Input = (props: Props) => {
-  const { disabled, label, ...rest} = props;
+  const { disabled, label, ...rest } = props;
 
   return (
-    <div className='dl-relative dl-w-full'>
+    <div className="dl-relative dl-w-full">
       <label
-        className={cn([`
+        className={`
           dl-flex
           dl-text-xs
           dl-font-normal
@@ -21,9 +20,8 @@ const Input = (props: Props) => {
           dl-px-1
           -dl-top-2
           dl-bg-white
-        `, {
-          'dl-text-neutral-dark/75': disabled
-        }])}
+          ${disabled ? "dl-text-neutral-dark/75" : ""}
+        `}
       >
         {label}
       </label>
