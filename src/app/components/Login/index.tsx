@@ -5,6 +5,7 @@ import { useFormik } from "formik";
 import { validationSchema } from "./loginform.form";
 import { useRouter } from "next/navigation";
 import { Auth } from "@/app/api";
+import InputField from "../shared/Input";
 
 const authCtrl = new Auth();
 
@@ -48,63 +49,19 @@ export default function LoginForm() {
         onSubmit={formik.handleSubmit}
         className="dl-gap-6 dl-flex dl-flex-col"
       >
-        <div>
-          <input
-            placeholder="Usuario"
-            name="identifier"
-            type="email"
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            value={formik.values.identifier}
-            className={`
-              dl-outline-0
-              dl-w-full
-              dl-border
-              dl-py-2.5
-              dl-px-4
-              dl-pr-12
-              dl-rounded-lg
-              dl-font-normal
-              placeholder:dl-text-neutral-dark
-              ${
-                formik.touched.identifier && formik.errors.identifier
-                  ? `dl-border-support-negative-medium`
-                  : ""
-              }
-            `}
-          />
-          {formik.touched.identifier && formik.errors.identifier ? (
-            <span className="dl-text-xs dl-text-support-negative-medium">
-              {formik.errors.identifier}
-            </span>
-          ) : null}
-        </div>
+        <InputField
+          name="identifier"
+          type="email"
+          placeholder="Usuario"
+          formik={formik}
+        />
 
-        <div>
-          <input
-            type="password"
-            placeholder="Contraseña"
-            name="password"
-            onChange={formik.handleChange}
-            value={formik.values.password}
-            className={`
-              dl-outline-0
-              dl-w-full
-              dl-border
-              dl-py-2.5
-              dl-px-4
-              dl-pr-12
-              dl-rounded-lg
-              dl-font-normal
-              placeholder:dl-text-neutral-dark
-            `}
-          />
-          {formik.touched.password && formik.errors.password ? (
-            <span className="dl-text-xs dl-text-support-negative-medium">
-              {formik.errors.password}
-            </span>
-          ) : null}
-        </div>
+        <InputField
+          name="password"
+          type="password"
+          placeholder="Contraseña"
+          formik={formik}
+        />
 
         <button
           type="submit"

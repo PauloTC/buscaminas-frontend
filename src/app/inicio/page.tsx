@@ -64,7 +64,6 @@ export default function ClientMapPage() {
           </AdvancedMarker>
         </Map>
       </APIProvider>
-      {/* <NavBar /> */}
     </div>
   );
 }
