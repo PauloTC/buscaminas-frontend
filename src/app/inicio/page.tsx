@@ -6,8 +6,26 @@ import {
   Pin,
 } from "@vis.gl/react-google-maps";
 import NavBar from "../components/Navbar";
+import { useEffect, useContext } from "react";
+import { ClientContext } from "../contexts";
 
 export default function ClientMapPage() {
+  const { getClients, clients } = useContext(ClientContext);
+
+  useEffect(() => {
+    (async () => {
+      try {
+        await getClients({ id: 2 });
+      } catch (error) {
+        console.error(error);
+      }
+    })();
+  }, []);
+
+  useEffect(() => {
+    console.log("🚀 ~ ClientMapPage ~ clients:", clients);
+  }, [clients]);
+
   return (
     <div className="dl-rounded-lg dl-overflow-hidden dl-mb-8">
       <APIProvider apiKey="AIzaSyAKZO7_5SojvI4AJby2A1xsDrunnBnPfA4">

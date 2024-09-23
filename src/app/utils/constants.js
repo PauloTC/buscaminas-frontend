@@ -1,0 +1,28 @@
+export const ENV = {
+  SERVER_HOST: "http://127.0.0.1:1337",
+  API_URL: "http://127.0.0.1:1337/api",
+  ENDPOINTS: {
+    AUTH: {
+      LOGIN: "/auth/local",
+    },
+    USERS_ME: "/users/me",
+    CLIENTS: "/clients",
+    // RESEARCH: "/researchs",
+    // PUBLICS: "/publics",
+    // SUBSCRIBERS: "/subscribers",
+    // INVESTIGATIONS: "/investigations",
+    // INVESTIGATION_TYPES: "/investigation-types",
+    // TEAMS: "/teams",
+    // RESEARCHERS: "/researchers",
+    // MATERIALS: "/materials",
+    // LOCATIONS: "/locations",
+    // PROJECTS: "/projects",
+    // COSTUMERS: "/costumers",
+    // EXPERIMENTS: "/experiments",
+    // VPS: "/vps",
+    // EXPERIMENT_TYPES: "/experiment-types",
+    // EXECUTION_METHODS: "/execution-methods",
+    // COMMENTS: "/comments",
+  },
+  TOKEN: "token",
+};

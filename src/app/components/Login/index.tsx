@@ -4,6 +4,9 @@ import Input from "../shared/Input";
 import { useFormik } from "formik";
 import { validationSchema } from "./loginform.form";
 import { useRouter } from "next/navigation";
+import { Auth } from "@/app/api";
+
+const authCtrl = new Auth();
 
 export default function LoginForm() {
   const router = useRouter();
@@ -14,9 +17,15 @@ export default function LoginForm() {
       password: "",
     },
     validationSchema: validationSchema,
-    onSubmit: (values) => {
-      console.log(values);
-      router.push("/inicio");
+    onSubmit: async (values) => {
+      try {
+        const response = await authCtrl.login(values);
+        console.log("🚀 ~ onSubmit: ~ response:", response);
+      } catch (error) {
+        console.error(error);
+      } finally {
+        router.push("/inicio");
+      }
     },
   });
 
