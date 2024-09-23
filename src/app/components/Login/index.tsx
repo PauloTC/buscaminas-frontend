@@ -3,8 +3,11 @@ import Image from "next/image";
 import Input from "../shared/Input";
 import { useFormik } from "formik";
 import { validationSchema } from "./loginform.form";
+import { useRouter } from "next/navigation";
 
 export default function LoginForm() {
+  const router = useRouter();
+
   const formik = useFormik({
     initialValues: {
       identifier: "",
@@ -13,6 +16,7 @@ export default function LoginForm() {
     validationSchema: validationSchema,
     onSubmit: (values) => {
       console.log(values);
+      router.push("/inicio");
     },
   });
 
