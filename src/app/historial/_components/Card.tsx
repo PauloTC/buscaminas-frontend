@@ -1,4 +1,4 @@
-import Icon from "@/app/components/shared/Icon";
+import Icon from "@/components/shared/Icon";
 import { useEffect } from "react";
 import { format, parseISO } from "date-fns";
 
@@ -40,7 +40,7 @@ export const Card = ({ client }: any) => {
               ? "dl-text-support-positive-dark dl-bg-support-bg-status-success/30"
               : "dl-text-support-warning-dark dl-bg-support-bg-status-warning/30"
           }
-        
+
         `}
         >
           {status === "Si se prospectó" ? "prospectado" : "pendiente"}

@@ -1,5 +1,5 @@
 import { ClientProvider } from "../contexts";
-import { MainLayout } from "../components/layouts/MainLayout";
+import { MainLayout } from "../../components/layouts/MainLayout";
 
 export default function LayoutPage({
   children,
