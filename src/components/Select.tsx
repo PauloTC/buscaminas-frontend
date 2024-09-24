@@ -1,14 +1,26 @@
-import { SelectHTMLAttributes } from 'react';
+import { SelectHTMLAttributes } from "react";
+
+type Option = {
+  value: string;
+  label: string;
+};
 
 type Props = {
   label: string;
-} & SelectHTMLAttributes<HTMLSelectElement>
+  formik: any;
+  name: string;
+  options: Option[];
+} & SelectHTMLAttributes<HTMLSelectElement>;
 
 const Select = (props: Props) => {
-  const { disabled, label, ...rest} = props;
+  const { disabled, label, options, formik, name, ...rest } = props;
 
   return (
-    <div className='dl-relative dl-w-full'>
+    <div
+      className={`dl-relative dl-w-full ${
+        disabled ? "dl-pointer-events-none dl-opacity-70" : ""
+      }`}
+    >
       <label
         className="
           dl-flex
@@ -25,6 +37,10 @@ const Select = (props: Props) => {
         {label}
       </label>
       <select
+        name={name}
+        onChange={formik.handleChange}
+        onBlur={formik.handleBlur}
+        value={formik.values[name]}
         className="
           dl-outline-0
           dl-bg-neutral-lightest
@@ -36,11 +52,19 @@ const Select = (props: Props) => {
           dl-px-3
           dl-rounded-lg
         "
+        {...rest}
       >
-        <option selected>Bodega</option>
-        <option value="US">United States</option>
-        <option value="CA">Canada</option>
+        {options.map((option, index) => (
+          <option key={index} value={option.value}>
+            {option.label}
+          </option>
+        ))}
       </select>
+      {formik.touched[name] && formik.errors[name] ? (
+        <div className="dl-text-xs dl-text-support-negative-medium">
+          {formik.errors[name]}
+        </div>
+      ) : null}
     </div>
   );
 };

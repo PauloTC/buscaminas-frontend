@@ -2,10 +2,12 @@ import { InputHTMLAttributes } from "react";
 
 type Props = {
   label: string;
+  name: string;
+  formik: any;
 } & InputHTMLAttributes<HTMLInputElement>;
 
 const Input = (props: Props) => {
-  const { disabled, label, ...rest } = props;
+  const { disabled, label, formik, name, ...rest } = props;
 
   return (
     <div className="dl-relative dl-w-full">
@@ -27,7 +29,10 @@ const Input = (props: Props) => {
       </label>
       <input
         type="text"
-        {...rest}
+        name={name}
+        onChange={formik.handleChange}
+        onBlur={formik.handleBlur}
+        value={formik.values[name]}
         disabled={disabled}
         className="
           dl-outline-0
@@ -43,6 +48,11 @@ const Input = (props: Props) => {
           disabled:dl-text-neutral-dark/75
         "
       />
+      {formik.touched[name] && formik.errors[name] ? (
+        <div className="dl-text-xs dl-text-support-negative-medium">
+          {formik.errors[name]}
+        </div>
+      ) : null}
     </div>
   );
 };
