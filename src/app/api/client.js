@@ -16,7 +16,7 @@ export class Client {
     }
   }
 
-  async createClient() {
+  async createClient(data) {
     try {
       const url = `${ENV.API_URL}${ENV.ENDPOINTS.CLIENTS}`;
 

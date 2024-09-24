@@ -4,9 +4,16 @@ import Input from "@/components/Input";
 import Select from "@/components/Select";
 import VisitMap from "@/components/VisitMap";
 import { useFormik } from "formik";
+import { Client } from "@/app/api";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import { format, parseISO } from "date-fns";
 
 export default function ClientVisitPage() {
   const router = useRouter();
+  const clientCtrl = new Client();
+
+  const storedUserId = localStorage.getItem("user.id");
 
   //Opciones Estáticas
   const PriorityOptions = [
@@ -61,19 +68,25 @@ export default function ClientVisitPage() {
   const formik = useFormik({
     initialValues: {
       status: "Pendiente",
+      comments: "",
       address: "",
       reference: "",
       business_type: "",
       comercial_name: "",
       client_name: "",
-      cellphone: 0,
+      visited: new Date(),
+      cellphone: "",
+      user: storedUserId,
     },
     onSubmit: async (values) => {
-      try {
-        console.log("values", values);
-      } catch (error) {
-        console.error(error);
-      }
+      console.log("🚀 ~ onSubmit: ~ values:", values);
+      // try {
+      //   const response = await clientCtrl.createClient(values);
+
+      //   console.log("🚀 ~ onSubmit: ~ response:", response);
+      // } catch (error) {
+      //   console.error(error);
+      // }
     },
   });
 
@@ -81,7 +94,7 @@ export default function ClientVisitPage() {
     <form onSubmit={formik.handleSubmit} className="dl-px-4 dl-py-10">
       <div
         className="dl-flex dl-gap-2 dl-mb-10 dl-font-semibold"
-        onClick={() => router.push('/inicio')}
+        onClick={() => router.push("/inicio")}
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -102,6 +115,18 @@ export default function ClientVisitPage() {
         Información de la visita
       </h2>
       <div className="dl-flex dl-flex-col dl-gap-6">
+        <DatePicker
+          dateFormat="dd/MM/yyyy"
+          placeholderText="Fecha de visita"
+          selected={formik.values.visited}
+          onChange={(date: Date) => {
+            formik.setFieldValue(
+              "visited",
+              parseISO(format(date, "yyyy-MM-dd"))
+            );
+          }}
+        />
+
         <div className="dl-hidden">
           <Select
             name="priority"
@@ -110,6 +135,7 @@ export default function ClientVisitPage() {
             options={PriorityOptions}
             label="Prioridad"
           />
+          D
         </div>
         <Select
           name="status"
@@ -117,7 +143,7 @@ export default function ClientVisitPage() {
           options={CurrentStatus}
           label="Estado actual"
         />
-        {/* <Input label="Comments" /> */}
+        <Input name="comments" formik={formik} label="Comments" />
       </div>
 
       <h2
