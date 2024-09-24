@@ -14,10 +14,17 @@ enum CrudAction {
   CANCELVISIT = "cancelVisit",
 }
 
-interface ActionsModalProps {
+interface ModalState {
   title: string;
+  image: string;
+  primaryButtonText: string;
+  secondaryButtonText: string;
+}
+
+interface ActionsModalProps {
   isOpen: boolean;
   comercialName: string;
+  modalState: ModalState;
   onClose: () => void;
   onConfirm: () => void;
 }
@@ -25,46 +32,44 @@ interface ActionsModalProps {
 const ActionModal: React.FC<ActionsModalProps> = ({
   // action,
   // subtitle,
+  modalState,
   isOpen,
-  title,
   comercialName,
   onClose,
   onConfirm,
 }) => {
-  const buttonsMessages: Record<CrudAction, string[]> = {
-    [CrudAction.VIEW]: [
-      "Quieres ver el registro del cliente:",
-      "Si, revisar",
-      "No",
-    ],
-    [CrudAction.VISIT]: [
-      "Estas por guardar tu visita con el cliente:",
-      "Si, guardar",
-      "No guardar",
-    ],
-    [CrudAction.CANCELEDIT]: [
-      "Estás por cerrar sin actualizar los datos de:",
-      "Sí, actualizar comercio",
-      "No actualizar",
-    ],
-    [CrudAction.CREATE]: [
-      "Estas por agregar este cliente a tu ruta:",
-      "Sí, agregar",
-      "Seguir editando",
-    ],
-    [CrudAction.CANCELCREATE]: [
-      "Estás por cerrar sin agregar los datos de:",
-      "Sí, agregar",
-      "No agregar",
-    ],
-    [CrudAction.CANCELVISIT]: [
-      "Estás por cerrar sin guardar la visita de:",
-      "Sí, guardar visita",
-      "No guardar",
-    ],
-  };
-  // const messageButton = buttonsMessages[action] || "Acción desconocida";
-
+  // const buttonsMessages: Record<CrudAction, string[]> = {
+  //   [CrudAction.VIEW]: [
+  //     "Quieres ver el registro del cliente:",
+  //     "Si, revisar",
+  //     "No",
+  //   ],
+  //   [CrudAction.VISIT]: [
+  //     "Estas por guardar tu visita con el cliente:",
+  //     "Si, guardar",
+  //     "No guardar",
+  //   ],
+  //   [CrudAction.CANCELEDIT]: [
+  //     "Estás por cerrar sin actualizar los datos de:",
+  //     "Sí, actualizar comercio",
+  //     "No actualizar",
+  //   ],
+  //   [CrudAction.CREATE]: [
+  //     "Estas por agregar este cliente a tu ruta:",
+  //     "Sí, agregar",
+  //     "Seguir editando",
+  //   ],
+  //   [CrudAction.CANCELCREATE]: [
+  //     "Estás por cerrar sin agregar los datos de:",
+  //     "Sí, agregar",
+  //     "No agregar",
+  //   ],
+  //   [CrudAction.CANCELVISIT]: [
+  //     "Estás por cerrar sin guardar la visita de:",
+  //     "Sí, guardar visita",
+  //     "No guardar",
+  //   ],
+  // };
   return (
     <div
       className={`dl-fixed dl-inset-0 dl-flex dl-items-center dl-justify-center dl-bg-black dl-bg-opacity-50 dl-z-50
@@ -82,13 +87,13 @@ const ActionModal: React.FC<ActionsModalProps> = ({
           <Image
             width={160}
             height={160}
-            alt="hi5"
-            src="/images/manos_hi5.svg"
+            alt="modal_image"
+            src={modalState.image}
             className="dl-mb-7"
           />
 
           <h2 className="dl-text-center  dl-text-2xl dl-leading-6 dl-text-neutral-darkest dl-mb-4 dl-font-bold ">
-            {title}
+            {modalState.title}
           </h2>
           <p className="dl-uppercase">
             {comercialName || "Sin nombre comercial"}

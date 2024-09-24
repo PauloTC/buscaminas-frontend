@@ -10,18 +10,23 @@ import "react-datepicker/dist/react-datepicker.css";
 
 import { format, parseISO } from "date-fns";
 import TextArea from "@/components/TextArea";
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import ActionModal from "@/components/Modal/ActionModal";
-import { AuthContext } from "../contexts/AuthContext";
 
 export default function ClientVisitPage() {
   const router = useRouter();
   const clientCtrl = new Client();
 
-  const { user } = useContext(AuthContext);
-
   const [userId, setUserId] = useState("");
   const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [modalState, setModalState] = useState({
+    title: "",
+    image: "",
+    primaryButtonText: "Sí, agregar",
+    secondaryButtonText: "",
+  });
+  const [modalTitle, setModalTitle] = useState("");
+  const [modalImage, setModalImage] = useState("");
 
   useEffect(() => {
     const storedUserId = localStorage.getItem("user.id");
@@ -36,8 +41,8 @@ export default function ClientVisitPage() {
   }, []);
 
   useEffect(() => {
-    console.log("🚀 ~ ClientVisitPage ~ user:", user);
-  }, [user]);
+    console.log("🚀 ~ ClientVisitPage ~ user:", userId);
+  }, [userId]);
 
   //Opciones Estáticas
   const PriorityOptions = [
@@ -100,7 +105,6 @@ export default function ClientVisitPage() {
       client_name: "",
       visited: new Date(),
       cellphone: "",
-      user: userId,
     },
     onSubmit: async (values) => {},
   });
@@ -169,7 +173,7 @@ export default function ClientVisitPage() {
             options={CurrentStatus}
             label="Estado actual"
           />
-          {/* <TextArea name="comments" formik={formik} label="Comments" /> */}
+          <TextArea name="comments" formik={formik} label="Comentarios" />
         </div>
 
         <h2
@@ -281,6 +285,12 @@ export default function ClientVisitPage() {
             onClick={(e) => {
               e.preventDefault();
               setModalIsOpen(true);
+              setModalState({
+                title: "Estás por agregar este cliente a tu ruta:",
+                image: "/images/manos_hi5.svg",
+                primaryButtonText: "Sí, agregar",
+                secondaryButtonText: "Seguir editando",
+              });
             }}
             className="
               dl-cursor-pointer
@@ -299,6 +309,16 @@ export default function ClientVisitPage() {
             Guardar visita
           </button>
           <button
+            onClick={(e) => {
+              e.preventDefault();
+              setModalIsOpen(true);
+              setModalState({
+                title: "Estás por cerrar sin agregar los datos de:",
+                image: "/images/dudando.svg",
+                primaryButtonText: "Sí, agregar",
+                secondaryButtonText: "No agregar",
+              });
+            }}
             id="button-close"
             className="
               dl-cursor-pointer
@@ -319,14 +339,18 @@ export default function ClientVisitPage() {
         onClose={() => setModalIsOpen(false)}
         onConfirm={async () => {
           try {
-            const response = await clientCtrl.createClient(formik.values);
+            const response = await clientCtrl.createClient({
+              ...formik.values,
+              user: userId,
+            });
             console.log("🚀 ~ onSubmit: ~ response:", response);
+            formik.resetForm();
           } catch (error) {
             console.error(error);
           }
         }}
+        modalState={modalState}
         comercialName={formik.values.comercial_name}
-        title="Estas por agregar este cliente a tu ruta:"
         isOpen={modalIsOpen}
       />
     </>

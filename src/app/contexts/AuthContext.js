@@ -2,6 +2,7 @@
 import { createContext, useState, useEffect } from "react";
 import { User, Token } from "@/app/api";
 
+const tokenCtrl = new Token();
 const userCtrl = new User();
 
 export const AuthContext = createContext();
@@ -13,7 +14,7 @@ export const AuthProvider = (props) => {
 
   useEffect(() => {
     async () => {
-      // const token = tokenCtrl.getToken();
+      const token = tokenCtrl.getToken();
 
       console.log("🚀 ~ token", token);
       debugger;
@@ -22,10 +23,10 @@ export const AuthProvider = (props) => {
 
   const login = async (token) => {
     try {
+      tokenCtrl.setToken(token);
       const response = await userCtrl.getMe();
-      console.log("🚀 ~ login ~ response:", response);
-      debugger;
       setUser(response);
+      setToken(token);
     } catch (error) {
       console.log("error", error);
     }

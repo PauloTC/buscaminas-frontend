@@ -27,9 +27,11 @@ export const Card = ({ client }: any) => {
         </div>
         <div className="dl-flex dl-flex-col dl-pl-2">
           <p className="dl-text-sm dl-uppercase">{comercial_name}</p>
-          <span className="dl-text-xs dl-text-neutral-dark">
-            {format(parseISO(visited), "dd/MM/yyyy")}
-          </span>
+          {visited && (
+            <span className="dl-text-xs dl-text-neutral-dark">
+              {format(parseISO(visited), "dd/MM/yyyy")}
+            </span>
+          )}
         </div>
       </div>
       <div className="dl-flex dl-justify-between dl-mt-3.5 dl-mb-5 dl-items-center">

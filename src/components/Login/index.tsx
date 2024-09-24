@@ -5,12 +5,14 @@ import { useFormik } from "formik";
 import { validationSchema } from "./loginform.form";
 import { useRouter } from "next/navigation";
 import { Auth } from "@/app/api";
+import { useAuth } from "@/hooks/useAuth";
 import InputField from "@components/shared/InputField";
 
 const authCtrl = new Auth();
 
 export default function LoginForm() {
   const router = useRouter();
+  const { login } = useAuth();
 
   const formik = useFormik({
     initialValues: {
@@ -19,10 +21,9 @@ export default function LoginForm() {
     },
     validationSchema: validationSchema,
     onSubmit: async (values) => {
-      console.log("🚀 ~ onSubmit: ~ values:", values);
       try {
         const response = await authCtrl.login(values);
-
+        login(response.jwt);
         localStorage.setItem("user.id", JSON.stringify(response.user.id));
 
         console.log("🚀 ~ onSubmit: ~ response:", response);

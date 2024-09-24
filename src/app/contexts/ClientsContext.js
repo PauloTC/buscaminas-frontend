@@ -12,7 +12,6 @@ export const ClientProvider = ({ children }) => {
     try {
       const response = await clientCtrl.getClientsById(id);
       setClients(response.data);
-      console.log("response", response);
     } catch (error) {
       console.log("error", error);
     }
