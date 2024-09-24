@@ -6,7 +6,7 @@ import VisitMap from "@/components/VisitMap";
 import { useFormik } from "formik";
 import { Client } from "@/app/api";
 import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
+
 import { format, parseISO } from "date-fns";
 
 export default function ClientVisitPage() {
@@ -79,14 +79,13 @@ export default function ClientVisitPage() {
       user: storedUserId,
     },
     onSubmit: async (values) => {
-      console.log("🚀 ~ onSubmit: ~ values:", values);
-      // try {
-      //   const response = await clientCtrl.createClient(values);
+      try {
+        const response = await clientCtrl.createClient(values);
 
-      //   console.log("🚀 ~ onSubmit: ~ response:", response);
-      // } catch (error) {
-      //   console.error(error);
-      // }
+        console.log("🚀 ~ onSubmit: ~ response:", response);
+      } catch (error) {
+        console.error(error);
+      }
     },
   });
 
@@ -115,17 +114,20 @@ export default function ClientVisitPage() {
         Información de la visita
       </h2>
       <div className="dl-flex dl-flex-col dl-gap-6">
-        <DatePicker
-          dateFormat="dd/MM/yyyy"
-          placeholderText="Fecha de visita"
-          selected={formik.values.visited}
-          onChange={(date: Date) => {
-            formik.setFieldValue(
-              "visited",
-              parseISO(format(date, "yyyy-MM-dd"))
-            );
-          }}
-        />
+        <div className="dl-w-full dl-flex">
+          <DatePicker
+            dateFormat="dd/MM/yyyy"
+            className="dl-border dl-border-gray-300 dl-outline-none dl-h-12 dl-w-full dl-px-3 dl-rounded-lg"
+            placeholderText="Fecha de visita"
+            selected={formik.values.visited}
+            onChange={(date: Date) => {
+              formik.setFieldValue(
+                "visited",
+                parseISO(format(date, "yyyy-MM-dd"))
+              );
+            }}
+          />
+        </div>
 
         <div className="dl-hidden">
           <Select
