@@ -15,9 +15,9 @@ enum CrudAction {
 }
 
 interface ActionsModalProps {
-  action: CrudAction;
   title: string;
   isOpen: boolean;
+  comercialName: string;
   onClose: () => void;
   onConfirm: () => void;
 }
@@ -27,15 +27,10 @@ const ActionModal: React.FC<ActionsModalProps> = ({
   // subtitle,
   isOpen,
   title,
-  // onClose,
-  // onConfirm,
+  comercialName,
+  onClose,
+  onConfirm,
 }) => {
-  if (!isOpen) return null;
-
-  const handleConfirm = () => {
-    // onConfirm();
-    // onClose();
-  };
   const buttonsMessages: Record<CrudAction, string[]> = {
     [CrudAction.VIEW]: [
       "Quieres ver el registro del cliente:",
@@ -71,10 +66,16 @@ const ActionModal: React.FC<ActionsModalProps> = ({
   // const messageButton = buttonsMessages[action] || "Acción desconocida";
 
   return (
-    <div className="dl-fixed dl-inset-0 dl-flex dl-items-center dl-justify-center dl-bg-black dl-bg-opacity-50 dl-z-50">
+    <div
+      className={`dl-fixed dl-inset-0 dl-flex dl-items-center dl-justify-center dl-bg-black dl-bg-opacity-50 dl-z-50
+
+    ${isOpen ? "dl-visible" : "dl-hidden"}
+
+      `}
+    >
       <div className="  dl-bg-white dl-p-6 dl-rounded-lg dl-shadow-lg dl-w-full dl-max-w-xs dl-flex dl-flex-col dl-justify-center dl-items-center">
         <div className="dl-w-full dl-flex dl-flex-row dl-justify-end">
-          <Icon name="close-regular" />
+          <Icon onClick={() => onClose()} name="close-regular" />
         </div>
 
         <div className="dl-flex dl-flex-col dl-items-center">
@@ -89,13 +90,25 @@ const ActionModal: React.FC<ActionsModalProps> = ({
           <h2 className="dl-text-center  dl-text-2xl dl-leading-6 dl-text-neutral-darkest dl-mb-4 dl-font-bold ">
             {title}
           </h2>
-          <p>"ATIPANA DEX S.A.C”</p>
+          <p className="dl-uppercase">
+            {comercialName || "Sin nombre comercial"}
+          </p>
         </div>
         <div className="dl-w-full dl-flex dl-flex-col dl-justify-center ">
-          <button className="dl-bg-highlight-medium dl-text-neutral-lightest dl-mt-6 dl-font-semibold dl-h-12 dl-rounded-lg disabled:dl-bg-neutral-light disabled:dl-text-neutral-dark">
+          <button
+            onClick={(e) => {
+              e.preventDefault();
+              onConfirm();
+            }}
+            className="dl-bg-highlight-medium dl-text-neutral-lightest dl-mt-6 dl-font-semibold dl-h-12 dl-rounded-lg disabled:dl-bg-neutral-light disabled:dl-text-neutral-dark"
+          >
             Sí, agregar
           </button>
           <button
+            onClick={(e) => {
+              e.preventDefault();
+              onClose();
+            }}
             className="dl-mt-4
             dl-text-neutral-darkest
               dl-font-semibold

@@ -19,14 +19,19 @@ export default function LoginForm() {
     },
     validationSchema: validationSchema,
     onSubmit: async (values) => {
+      console.log("🚀 ~ onSubmit: ~ values:", values);
       try {
         const response = await authCtrl.login(values);
 
         localStorage.setItem("user.id", JSON.stringify(response.user.id));
+
+        console.log("🚀 ~ onSubmit: ~ response:", response);
+
+        if (response) {
+          router.push("/inicio");
+        }
       } catch (error) {
         console.error(error);
-      } finally {
-        router.push("/inicio");
       }
     },
   });

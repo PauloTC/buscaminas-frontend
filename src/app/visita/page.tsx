@@ -6,16 +6,22 @@ import VisitMap from "@/components/VisitMap";
 import { useFormik } from "formik";
 import { Client } from "@/app/api";
 import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 import { format, parseISO } from "date-fns";
 import TextArea from "@/components/TextArea";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import ActionModal from "@/components/Modal/ActionModal";
+import { AuthContext } from "../contexts/AuthContext";
 
 export default function ClientVisitPage() {
   const router = useRouter();
   const clientCtrl = new Client();
 
+  const { user } = useContext(AuthContext);
+
   const [userId, setUserId] = useState("");
+  const [modalIsOpen, setModalIsOpen] = useState(false);
 
   useEffect(() => {
     const storedUserId = localStorage.getItem("user.id");
@@ -24,7 +30,14 @@ export default function ClientVisitPage() {
     } else {
       setUserId(storedUserId);
     }
+
+    console.log("🚀 ~ ClientVisitPage ~ userId:", userId);
+    console.log(localStorage.getItem("user.id"));
   }, []);
+
+  useEffect(() => {
+    console.log("🚀 ~ ClientVisitPage ~ user:", user);
+  }, [user]);
 
   //Opciones Estáticas
   const PriorityOptions = [
@@ -79,7 +92,7 @@ export default function ClientVisitPage() {
   const formik = useFormik({
     initialValues: {
       status: "Pendiente",
-      comments: "",
+      // comments: "",
       address: "",
       reference: "",
       business_type: "",
@@ -89,20 +102,12 @@ export default function ClientVisitPage() {
       cellphone: "",
       user: userId,
     },
-    onSubmit: async (values) => {
-      try {
-        const response = await clientCtrl.createClient(values);
-
-        console.log("🚀 ~ onSubmit: ~ response:", response);
-      } catch (error) {
-        console.error(error);
-      }
-    },
+    onSubmit: async (values) => {},
   });
 
   return (
     <>
-      <form onSubmit={formik.handleSubmit} className="dl-px-4 dl-py-10">
+      <form className="dl-px-4 dl-py-10">
         <div
           className="dl-flex dl-gap-2 dl-mb-10 dl-font-semibold"
           onClick={() => router.push("/inicio")}
@@ -164,7 +169,7 @@ export default function ClientVisitPage() {
             options={CurrentStatus}
             label="Estado actual"
           />
-          <TextArea name="comments" formik={formik} label="Comments" />
+          {/* <TextArea name="comments" formik={formik} label="Comments" /> */}
         </div>
 
         <h2
@@ -273,7 +278,10 @@ export default function ClientVisitPage() {
           "
         >
           <button
-            type="submit"
+            onClick={(e) => {
+              e.preventDefault();
+              setModalIsOpen(true);
+            }}
             className="
               dl-cursor-pointer
               dl-bg-highlight-medium
@@ -307,7 +315,20 @@ export default function ClientVisitPage() {
           </button>
         </div>
       </form>
-      {/* <ActionModal title="Estas por agregar este cliente a tu ruta:" isOpen /> */}
+      <ActionModal
+        onClose={() => setModalIsOpen(false)}
+        onConfirm={async () => {
+          try {
+            const response = await clientCtrl.createClient(formik.values);
+            console.log("🚀 ~ onSubmit: ~ response:", response);
+          } catch (error) {
+            console.error(error);
+          }
+        }}
+        comercialName={formik.values.comercial_name}
+        title="Estas por agregar este cliente a tu ruta:"
+        isOpen={modalIsOpen}
+      />
     </>
   );
 }
