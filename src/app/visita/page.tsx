@@ -8,6 +8,7 @@ import { Client } from "@/app/api";
 import DatePicker from "react-datepicker";
 
 import { format, parseISO } from "date-fns";
+import TextArea from '@/components/TextArea';
 
 export default function ClientVisitPage() {
   const router = useRouter();
@@ -145,7 +146,11 @@ export default function ClientVisitPage() {
           options={CurrentStatus}
           label="Estado actual"
         />
-        <Input name="comments" formik={formik} label="Comments" />
+        <TextArea
+          name="comments"
+          formik={formik}
+          label="Comments"
+        />
       </div>
 
       <h2
