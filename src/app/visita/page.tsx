@@ -79,7 +79,10 @@ export default function ClientVisitPage() {
 
   return (
     <form onSubmit={formik.handleSubmit} className="dl-px-4 dl-py-10">
-      <div className="dl-flex dl-gap-2 dl-mb-10 dl-font-semibold">
+      <div
+        className="dl-flex dl-gap-2 dl-mb-10 dl-font-semibold"
+        onClick={() => router.push('/inicio')}
+      >
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="24"

@@ -46,11 +46,12 @@ export default function ClientMapPage() {
           {getPromises().map((client: any, index: number) => {
             const color = client.status === 'Pendiente' ? '#6C6C6C' : '#E16C00';
             const priority = client.priority && client.priority.split('_') || ['', ''];
-            console.log('prioridad', priority)
+
             return (
               <AdvancedMarker
                 position={{ lat: Number(client.lat), lng: Number(client.long) }}
                 key={index}
+                onClick={() => console.log('client', client)}
               >
                 <Pin
                   background={color}
