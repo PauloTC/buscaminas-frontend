@@ -111,6 +111,24 @@ const Icon = (props: Props) => {
       </svg>
     );
   }
+
+  if (name === "close-regular") {
+    return (
+      <svg
+        {...rest}
+        width="32"
+        height="32"
+        viewBox="0 0 32 32"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M6.74097 23.7114L8.23605 25.2065L16.0262 17.3901L23.8426 25.2065L25.259 23.7901L17.4426 15.9737L25.259 8.18356L23.7639 6.68848L15.9738 14.5049L8.15736 6.68848L6.74097 8.10487L14.5574 15.9213L6.74097 23.7114Z"
+          fill={color}
+        />
+      </svg>
+    );
+  }
 };
 
 export default Icon;
