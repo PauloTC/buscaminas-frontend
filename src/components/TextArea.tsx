@@ -6,7 +6,7 @@ type Props = {
   formik: any;
 } & InputHTMLAttributes<HTMLInputElement>;
 
-const Input = (props: Props) => {
+const TextArea = (props: Props) => {
   const { disabled, label, formik, name, ...rest } = props;
   const [openLabel, setOpenLabel] = useState(false);
 
@@ -37,13 +37,13 @@ const Input = (props: Props) => {
           dl-bg-white
           dl-transition-all
           ${disabled ? "dl-text-neutral-dark/75" : ""}
-          ${openLabel ? "-dl-top-2 dl-translate-y-0" : "dl-top-1/2 -dl-translate-y-1/2 dl-text-base"}
+          ${openLabel ? "-dl-top-2" : "dl-top-3 dl-text-base"}
         `}
       >
         {label}
       </label>
-      <input
-        type="text"
+      <textarea
+        rows={4}
         name={name}
         onChange={formik.handleChange}
         onBlur={handleOnblur}
@@ -56,9 +56,8 @@ const Input = (props: Props) => {
           dl-border
           dl-border-neutral-medium
           dl-text-neutral-darkest
-          dl-h-12
           dl-w-full
-          dl-px-4
+          dl-p-4
           dl-rounded-lg
           disabled:dl-bg-neutral-light
           disabled:dl-text-neutral-dark/75
@@ -73,4 +72,4 @@ const Input = (props: Props) => {
   );
 };
 
-export default Input;
+export default TextArea;

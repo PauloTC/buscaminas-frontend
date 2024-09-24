@@ -8,13 +8,23 @@ import { Client } from "@/app/api";
 import DatePicker from "react-datepicker";
 
 import { format, parseISO } from "date-fns";
-import ActionModal from "@/components/Modal/ActionModal";
+import TextArea from "@/components/TextArea";
+import { useEffect, useState } from "react";
 
 export default function ClientVisitPage() {
   const router = useRouter();
   const clientCtrl = new Client();
 
-  const storedUserId = localStorage.getItem("user.id");
+  const [userId, setUserId] = useState("");
+
+  useEffect(() => {
+    const storedUserId = localStorage.getItem("user.id");
+    if (!storedUserId) {
+      router.push("/");
+    } else {
+      setUserId(storedUserId);
+    }
+  }, []);
 
   //Opciones Estáticas
   const PriorityOptions = [
@@ -77,7 +87,7 @@ export default function ClientVisitPage() {
       client_name: "",
       visited: new Date(),
       cellphone: "",
-      user: storedUserId,
+      user: userId,
     },
     onSubmit: async (values) => {
       try {
@@ -112,9 +122,16 @@ export default function ClientVisitPage() {
           <p>Atrás</p>
         </div>
 
-        <h2 className="dl-mb-8 dl-text-neutral-darkest dl-text-2xl dl-font-medium">
-          Información de la visita
-        </h2>
+        <div className="dl-hidden">
+          <Select
+            name="priority"
+            formik={formik}
+            disabled
+            options={PriorityOptions}
+            label="Prioridad"
+          />
+        </div>
+
         <div className="dl-flex dl-flex-col dl-gap-6">
           <div className="dl-w-full dl-flex">
             <DatePicker
@@ -147,7 +164,7 @@ export default function ClientVisitPage() {
             options={CurrentStatus}
             label="Estado actual"
           />
-          <Input name="comments" formik={formik} label="Comments" />
+          <TextArea name="comments" formik={formik} label="Comments" />
         </div>
 
         <h2
