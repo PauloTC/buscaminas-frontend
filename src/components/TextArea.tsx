@@ -28,7 +28,6 @@ const TextArea = (props: Props) => {
       <label
         className={`
           dl-flex
-          dl-text-xs
           dl-font-normal
           dl-text-neutral-darkest
           dl-absolute
@@ -37,7 +36,7 @@ const TextArea = (props: Props) => {
           dl-bg-white
           dl-transition-all
           ${disabled ? "dl-text-neutral-dark/75" : ""}
-          ${openLabel ? "-dl-top-2" : "dl-top-3 dl-text-base"}
+          ${openLabel ? "-dl-top-2 dl-text-xs" : "dl-top-3 dl-text-base"}
         `}
       >
         {label}
