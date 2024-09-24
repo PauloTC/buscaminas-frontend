@@ -1,4 +1,4 @@
-import { InputHTMLAttributes } from "react";
+import { InputHTMLAttributes, useEffect, useState } from "react";
 
 type Props = {
   label: string;
@@ -8,6 +8,20 @@ type Props = {
 
 const Input = (props: Props) => {
   const { disabled, label, formik, name, ...rest } = props;
+  const [openLabel, setOpenLabel] = useState(false);
+
+  const writeLabel = () => {
+    setOpenLabel(true);
+  }
+
+  const handleOnblur = (event: any) => {
+    setOpenLabel(!!formik.values[name]);
+    formik.handleBlur(event);
+  }
+
+  useEffect(() => {
+    setOpenLabel(!!formik.values[name]);
+  }, [formik.values[name]])
 
   return (
     <div className="dl-relative dl-w-full">
@@ -20,9 +34,9 @@ const Input = (props: Props) => {
           dl-absolute
           dl-left-3
           dl-px-1
-          -dl-top-2
           dl-bg-white
           ${disabled ? "dl-text-neutral-dark/75" : ""}
+          ${openLabel ? "-dl-top-2 dl-translate-y-0" : "dl-top-1/2 -dl-translate-y-1/2"}
         `}
       >
         {label}
@@ -31,8 +45,9 @@ const Input = (props: Props) => {
         type="text"
         name={name}
         onChange={formik.handleChange}
-        onBlur={formik.handleBlur}
+        onBlur={handleOnblur}
         value={formik.values[name]}
+        onClick={writeLabel}
         disabled={disabled}
         className="
           dl-outline-0
